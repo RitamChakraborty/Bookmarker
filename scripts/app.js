@@ -90,3 +90,30 @@ function listBookmarks() {
         }
     }
 }
+
+// Handle click event for visit-button
+function visitButtonOnClick(ev) {
+    const name = getElement(ev);
+
+    // Get all the bookmarks
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+
+    for (let i = 0; i < bookmarks.length; i++) {
+        const bookmark = bookmarks[i];
+
+        // When the name is same, then get the url
+        if (name === bookmark['name']) {
+            const url = bookmark['url'];
+
+            // Open the url
+            window.open(url);
+        }
+    }
+}
+
+// Get the name of the website from the button
+function getElement(ev) {
+    const parent = ev.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+    const span = parent.children[0];
+    return span.innerHTML;
+}
