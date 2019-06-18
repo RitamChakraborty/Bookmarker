@@ -111,6 +111,43 @@ function visitButtonOnClick(ev) {
     }
 }
 
+// Handle click event for delete-button
+function deleteButtonOnClick(ev) {
+    const name = getElement(ev);
+
+    // Get all the bookmarks;
+    var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+
+    let bookmark = null;
+
+    for (let i = 0; i < bookmarks.length; i++) {
+        bookmark = bookmarks[i];
+
+        if (name === bookmark['name']) {
+            break;
+        }
+    }
+
+    // Temp array to store modified bookmark list
+    var newBookmarks = [];
+
+    for (let i = 0; i < bookmarks.length; i++) {
+        if (bookmarks[i] !== bookmark) {
+            newBookmarks.push(bookmarks[i]);
+        }
+    }
+
+    // Convert the array to a string
+    const bookmarksString = JSON.stringify(newBookmarks);
+
+    // Add new bookmarks to the local-storage
+    localStorage.setItem('bookmarks', bookmarksString);
+
+    // Show the modified bookmark list
+    listBookmarks();
+
+}
+
 // Get the name of the website from the button
 function getElement(ev) {
     const parent = ev.target.parentElement.parentElement.parentElement.parentElement.parentElement;
